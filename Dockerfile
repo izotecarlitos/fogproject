@@ -5,7 +5,7 @@ RUN apt update && apt upgrade -y
 
 RUN apt install -y wget iproute2 software-properties-common language-pack-en jq
 
-ENV VERSION=1.5.8
+ENV VERSION=1.5.9
 
 RUN wget https://github.com/FOGProject/fogproject/archive/${VERSION}.tar.gz \
  && tar xvfz ${VERSION}.tar.gz \
