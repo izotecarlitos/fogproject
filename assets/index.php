@@ -1,5 +1,5 @@
 <?php
 
-header ("Location: /fog/");
+header ("Location: http://localhost/fog/");
 
 ?>
