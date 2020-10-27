@@ -44,6 +44,13 @@ if [ $IP ] && [ "${IP}" !=  "${ipaddress}" ] ; then
   sed -i "s|//fog/wol/wol.php|/fog/wol/wol.php|g" /var/www/fog/lib/fog/config.class.php
   sed -i "s|/opt/fog/snapins/ssl//.srvprivate.key|/opt/fog/snapins/ssl/.srvprivate.key|g" /opt/fog/.fogsettings
 
+  {
+    echo -e "\n"
+    echo -e "# We add these to make mountd use a static port. Otherwise it uses a dynamic port, making it hard for us to let the port through Docker"
+    echo -e "mountd          34463/tcp"
+    echo -e "mountd          34463/udp"
+  } >> /etc/services
+
   ipaddress=$IP
 fi
 
