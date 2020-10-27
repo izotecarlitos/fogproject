@@ -24,15 +24,14 @@ chown -R fogproject:fogproject /backup
 
 /etc/init.d/rsyslog start
 
-
 source /opt/fog/.fogsettings
 
 /etc/init.d/mysql start
 
 # search and replace ip
-if [ $IP ] && [ "${IP}" !=  "${ipaddress}" ] ; then
+if [ "$IP" ] && [ "${IP}" !=  "${ipaddress}" ] ; then
   mysqldump -u root fog > dump.sql
-  sed -i 's,'${ipaddress}','${IP}',g' /dump.sql \
+  sed -i "s,"${ipaddress}','${IP}",g" /dump.sql \
                                       /tftpboot/default.ipxe \
                                       /var/www/fog/lib/fog/config.class.php \
                                       /var/www/html/fog/lib/fog/config.class.php \
@@ -54,7 +53,7 @@ if [ $IP ] && [ "${IP}" !=  "${ipaddress}" ] ; then
   ipaddress=$IP
 fi
 
-if [ -z $APACHE_ROOT_REDIRECTION ] ; then
+if [ -z "$APACHE_ROOT_REDIRECTION" ] ; then
 	REDIRECT="/fog/"
 else
 	REDIRECT=$APACHE_ROOT_REDIRECTION
@@ -63,11 +62,11 @@ fi
 sed -i "s~header.*~header('Location: $REDIRECT');~g" /var/www/html/index.php
 sed -i "s~header.*~header('Location: $REDIRECT');~g" /var/www/index.php
 
-
 /etc/init.d/xinetd start
 /etc/init.d/php7.1-fpm start
 /etc/init.d/apache2 start
-#/etc/init.d/nfs-kernel-server start
+/etc/init.d/rpcbind start
+/etc/init.d/nfs-kernel-server restart
 /etc/init.d/vsftpd start
 /etc/init.d/FOGImageReplicator start
 /etc/init.d/FOGImageSize start
@@ -85,7 +84,7 @@ the information listed below.  The login information
 is only if this is the first install.
 
 This can be done by opening a web browser and going to:"
-  if [ ${IP} ] ; then
+  if [ "${IP}" ] ; then
     echo "http://${IP}/fog/management"
   else
     echo "http://${ipaddress}/fog/management"
@@ -93,7 +92,6 @@ This can be done by opening a web browser and going to:"
 
   rm -f /INIT
 fi
-
 
 # prevent start&exit containter process
 while true; do sleep 1000; done
