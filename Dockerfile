@@ -3,7 +3,7 @@ MAINTAINER Guillem Tanyà <gtanya@opentrends.net>
 
 RUN apt update && apt upgrade -y
 
-RUN apt install -y wget iproute2 software-properties-common language-pack-en jq
+RUN apt install -y wget iproute2 software-properties-common language-pack-en jq nano
 
 ENV VERSION=1.5.9
 

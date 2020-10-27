@@ -40,6 +40,10 @@ if [ $IP ] && [ "${IP}" !=  "${ipaddress}" ] ; then
                                       /opt/fog/.fogsettings
   mysql -u root fog < dump.sql && rm -f dump.sql
 
+  sed -i "s|/var/www/fog//service/ipxe/|/var/www/fog/service/ipxe/|g" /var/www/fog/lib/fog/config.class.php
+  sed -i "s|//fog/wol/wol.php|/fog/wol/wol.php|g" /var/www/fog/lib/fog/config.class.php
+  sed -i "s|/opt/fog/snapins/ssl//.srvprivate.key|/opt/fog/snapins/ssl/.srvprivate.key|g" /opt/fog/.fogsettings
+
   ipaddress=$IP
 fi
 
