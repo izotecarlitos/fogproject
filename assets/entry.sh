@@ -10,6 +10,8 @@ DEFAULT_DATA_IMAGES="${DEFAULT_DATA}/images"
 MYSQL_DATA="/var/lib/mysql/"
 IMAGES_DATA="/images"
 
+touch $IMAGES_DATA/.mntcheck
+
 if [ -z "$(ls -A /var/lib/mysql)" ]; then
     cp -rp ${DEFAULT_DATA_MYSQL}/* $MYSQL_DATA
 fi
@@ -31,7 +33,7 @@ source /opt/fog/.fogsettings
 # search and replace ip
 if [ "$IP" ] && [ "${IP}" !=  "${ipaddress}" ] ; then
   mysqldump -u root fog > dump.sql
-  sed -i "s,"${ipaddress}','${IP}",g" /dump.sql \
+  sed -i "s,${ipaddress},${IP},g" /dump.sql \
                                       /tftpboot/default.ipxe \
                                       /var/www/fog/lib/fog/config.class.php \
                                       /var/www/html/fog/lib/fog/config.class.php \
